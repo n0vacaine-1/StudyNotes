@@ -616,6 +616,18 @@
       }
     }
     init();
-  </script>
+      ...
+  <!-- page content -->
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- One Tap / Button -->
+  <div id="g_id_onload"
+       data-client_id="YOUR_CLIENT_ID"
+       data-login_uri="https://YOUR_LOGIN_ENDPOINT/auth/google"
+       data-auto_prompt="true">
+  </div>
+  <div class="g_id_signin" data-type="standard" data-size="large"></div>
 </body>
 </html>
