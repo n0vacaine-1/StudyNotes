@@ -111,7 +111,6 @@
       z-index: 5;
     }
     .fab .btn { box-shadow: 0 4px 14px rgba(0,0,0,.12); }
-
     /* Modal + Drawer */
     .modal-backdrop, .drawer-backdrop {
       position: fixed; inset: 0;
@@ -141,13 +140,11 @@
       display: flex; gap: 8px; justify-content: end;
       padding: 12px 16px; border-top: 1px solid #eee;
     }
-
     .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
     .field input, .field textarea {
       border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; font-size: 14px;
     }
     .field textarea { min-height: 160px; }
-
     /* Cookie banner */
     .cookie-banner {
       position: fixed;
@@ -194,7 +191,6 @@
       <button id="btnCookieSettings" title="Cookie Settings">Cookie Settings</button>
     </div>
   </header>
-
   <main>
     <div class="search">
       <input id="searchInput" placeholder="Search notes..." />
@@ -202,12 +198,10 @@
     </div>
     <div id="notesList" class="notes"></div>
   </main>
-
   <div class="fab">
     <button id="btnExport" class="btn">Export</button>
     <button id="btnImport" class="btn">Import</button>
   </div>
-
   <!-- Note Editor Modal -->
   <div id="noteModalBackdrop" class="modal-backdrop">
     <div class="modal">
@@ -231,7 +225,6 @@
       </div>
     </div>
   </div>
-
   <!-- Terms & Policies Modal -->
   <div id="termsBackdrop" class="modal-backdrop">
     <div class="modal">
@@ -251,7 +244,6 @@
       </div>
     </div>
   </div>
-
   <!-- Cookie Settings Drawer -->
   <div id="settingsBackdrop" class="drawer-backdrop">
     <div class="drawer" style="width: 680px; max-width: calc(100% - 24px);">
@@ -303,7 +295,6 @@
       </div>
     </div>
   </div>
-
   <!-- Cookie Banner -->
   <div id="cookieBanner" class="cookie-banner">
     <div class="row">
@@ -344,7 +335,6 @@
     const CONSENT_COOKIE = 'consent_prefs';
     const CONSENT_MAX_AGE = 60 * 60 * 24 * 180;
     const defaultConsent = { essential: true, analytics: false, marketing: false };
-
     function getConsent() {
       return readCookieJSON(CONSENT_COOKIE, null) || defaultConsent;
     }
@@ -358,7 +348,6 @@
     // --------------- Notes store (cookie) ---------------
     const NOTES_COOKIE = 'notes';
     const NOTES_MAX_AGE = 60 * 60 * 24 * 180;
-
     function loadNotes() {
       const list = readCookieJSON(NOTES_COOKIE, []);
       return Array.isArray(list) ? list : [];
@@ -378,7 +367,6 @@
     const btnAdd = document.getElementById('btnAdd');
     const btnExport = document.getElementById('btnExport');
     const btnImport = document.getElementById('btnImport');
-
     const noteModalBackdrop = document.getElementById('noteModalBackdrop');
     const noteTitle = document.getElementById('noteTitle');
     const noteContent = document.getElementById('noteContent');
@@ -386,20 +374,17 @@
     const closeModal = document.getElementById('closeModal');
     const saveNoteBtn = document.getElementById('saveNote');
     const deleteNoteBtn = document.getElementById('deleteNote');
-
     const cookieBanner = document.getElementById('cookieBanner');
     const openSettingsBtn = document.getElementById('openSettings');
     const acceptBannerBtn = document.getElementById('acceptBanner');
     const rejectBannerBtn = document.getElementById('rejectBanner');
     const openTermsLink = document.getElementById('openTermsLink');
-
     const settingsBackdrop = document.getElementById('settingsBackdrop');
     const toggleAnalytics = document.getElementById('toggleAnalytics');
     const toggleMarketing = document.getElementById('toggleMarketing');
     const savePrefsBtn = document.getElementById('savePrefs');
     const rejectAllBtn = document.getElementById('rejectAll');
     const closeSettings = document.getElementById('closeSettings');
-
     const btnCookieSettings = document.getElementById('btnCookieSettings');
     const termsBackdrop = document.getElementById('termsBackdrop');
     const closeTerms = document.getElementById('closeTerms');
@@ -433,7 +418,6 @@
         meta.className = 'meta';
         meta.textContent = 'Updated: ' + new Date(n.u || Date.now()).toLocaleString();
         left.appendChild(h3); left.appendChild(p); left.appendChild(meta);
-
         const right = document.createElement('div');
         right.className = 'actions';
         const editBtn = document.createElement('button');
@@ -445,7 +429,6 @@
         delBtn.textContent = 'Delete';
         delBtn.onclick = () => removeNote(n.id);
         right.appendChild(editBtn); right.appendChild(delBtn);
-
         item.appendChild(left); item.appendChild(right);
         notesList.appendChild(item);
       }
@@ -502,7 +485,7 @@
       const input = document.createElement('input');
       input.type = 'file'; input.accept = '.json,application/json';
       input.onchange = async () => {
-        const file = input.files && input.files[0];
+        const file = input.files && input.files;
         if (!file) return;
         const text = await file.text();
         try {
@@ -541,7 +524,6 @@
     // --------------- Cookie banner + settings ---------------
     function showBanner() { cookieBanner.style.display = 'block'; }
     function hideBanner() { cookieBanner.style.display = 'none'; }
-
     openSettingsBtn.addEventListener('click', () => {
       cookieBanner.style.display = 'none';
       openSettings();
@@ -556,7 +538,6 @@
       hideBanner();
     });
     openTermsLink.addEventListener('click', () => openTerms());
-
     // Settings drawer
     function openSettings() {
       const c = getConsent();
@@ -582,7 +563,6 @@
     });
     closeSettings.addEventListener('click', closeSettingsDrawer);
     btnCookieSettings.addEventListener('click', openSettings);
-
     // Terms modal
     function openTerms() { termsBackdrop.style.display = 'flex'; }
     function closeTermsModal() { termsBackdrop.style.display = 'none'; }
@@ -607,7 +587,6 @@
     function init() {
       notes = loadNotes();
       render();
-
       if (!hasRecordedConsent()) {
         showBanner();
       } else {
@@ -616,18 +595,38 @@
       }
     }
     init();
-      ...
-  <!-- page content -->
+  </script>
 
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <!-- One Tap / Button -->
+  <!-- OPTION A: One Tap posts ID token to your backend -->
   <div id="g_id_onload"
        data-client_id="YOUR_CLIENT_ID"
        data-login_uri="https://YOUR_LOGIN_ENDPOINT/auth/google"
        data-auto_prompt="true">
   </div>
+
+  <!-- Visible button (fallback) -->
   <div class="g_id_signin" data-type="standard" data-size="large"></div>
+
+  <!-- OPTION B: If you don't have a backend yet, use a client callback for testing -->
+  <!-- Comment out OPTION A's g_id_onload above and uncomment this block to log the token -->
+  <!--
+  <script>
+    function handleCredentialResponse(response) {
+      console.log('Google ID token (JWT):', response.credential);
+      // TODO: send to backend later for verification
+    }
+  </script>
+  <div id="g_id_onload"
+       data-client_id="YOUR_CLIENT_ID"
+       data-callback="handleCredentialResponse"
+       data-auto_prompt="true">
+  </div>
+  <div class="g_id_signin" data-type="standard" data-size="large"></div>
+  -->
+
 </body>
 </html>
+
